@@ -17,4 +17,22 @@ app.use('/', router)
 
 app.get('/', (req, res) => res.render('home'))
 
+const errorHandler = (err, req, res, next) => {
+    console.log(err);
+    return res.status(500).json({
+        status: 'fail',
+        errors: err.message
+    })
+}
+
+const notFoundHandler = (req, res, next) => {
+    return res.status(404).json({
+        status: 'fail',
+        errors: "Not Found"
+    })
+}
+
+app.use(errorHandler)
+app.use(notFoundHandler)
+
 app.listen(port, () => console.log(`http: ${port}`))
