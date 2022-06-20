@@ -12,6 +12,28 @@ module.exports = {
             })
     },
 
+    logIn(req, res) {
+        return User.findOne({
+            where: {
+                email: req.body.email,
+                password: req.body.password
+            }
+        })
+            .then((user) => {
+                if (!user) {
+                    return res.status(404).send({
+                        message: 'log in gagal'
+                    })
+                }
+                return res.status(200).send({
+                    message: 'log in berhasil'
+                })
+            })
+            .catch((error) => {
+                res.status(400).send(error)
+            })
+    },
+
     getById(req, res) {
         return User.findByPk(req.params.id, {
             include: []
@@ -38,7 +60,9 @@ module.exports = {
             password: req.body.password,
             orderId: req.body.orderId
         })
-            .then((user) => res.status(201).send(user))
+            .then(() => res.status(201).send({
+                message: 'Register Berhasil'
+            }))
             .catch((error) => {
                 res.status(400).send(error);
             });
@@ -60,7 +84,7 @@ module.exports = {
                     password: req.body.password,
                     orderId: req.body.orderId
                 })
-                    .then(() => res.status(200).send(user))
+                    .then(() => res.status(200).send({ message: 'User is Updated' }))
                     .catch((error) => {
                         res.status(400).send(error)
                     })
@@ -76,7 +100,7 @@ module.exports = {
                     })
                 }
                 return user.destroy()
-                    .then(() => res.status(204).send({ message: "User is deleted" }))
+                    .then(() => res.status(204).send({ message: "User is Deleted" }))
                     .catch((error) => {
                         res.status(400).send(error);
                     });
