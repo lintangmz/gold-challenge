@@ -15,12 +15,12 @@ module.exports = {
         return Order.findByPk(req.params.id, {
             include: [
                 {
-                    model: Item,
-                    as: 'items'
-                },
-                {
                     model: User,
                     as: 'users'
+                },
+                {
+                    model: Item,
+                    as: 'items'
                 }
             ]
         })
@@ -39,7 +39,7 @@ module.exports = {
 
     add(req, res) {
         return Order.create({
-            tgl_transaksi: req.body.tgl_transaksi,
+            tglTransaksi: req.body.tglTransaksi,
             status: req.body.status
         })
             .then((order) => res.status(201).send(order))
@@ -57,7 +57,7 @@ module.exports = {
                     })
                 }
                 return order.update({
-                    tgl_transaksi: req.body.tgl_transaksi,
+                    tglTransaksi: req.body.tglTransaksi,
                     status: req.body.status
                 })
                 .then((order) => res.status(200).send(order))

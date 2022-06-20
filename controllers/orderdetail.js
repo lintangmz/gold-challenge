@@ -1,6 +1,7 @@
 const OrderDetail = require('../models').OrderDetail;
 const Order = require('../models').Order;
 const User = require('../models').User;
+const Item = require('../models').Item;
 
 module.exports = {
     list(req, res) {
@@ -15,18 +16,7 @@ module.exports = {
     },
 
     getById(req, res) {
-        return OrderDetail.findByPk(req.params.id, {
-            include: [
-                {
-                    model: Order,
-                    as: 'orders'
-                },
-                {
-                    model: User,
-                    as: 'users'
-                }
-            ],
-        })
+        return OrderDetail.findByPk(req.params.id)
             .then((orderDetail) => {
                 if (!orderDetail) {
                     return res.status(404).send({
@@ -41,7 +31,6 @@ module.exports = {
     add(req, res) {
         return OrderDetail.create({
             orderId: req.body.orderId,
-            userId: req.body.userId,
             itemId: req.body.itemId
         })
             .then((orderDetail) => res.status(200).send(orderDetail))
@@ -58,7 +47,6 @@ module.exports = {
                 }
                 return orderDetail.update({
                     orderId: req.body.orderId,
-                    userId: req.body.userId,
                     itemId: req.body.itemId
                 })
                     .then(() => res.status(200).send(orderDetail))

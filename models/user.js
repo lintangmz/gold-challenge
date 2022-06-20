@@ -31,6 +31,5 @@ module.exports = (sequelize, DataTypes) => {
       as: 'order'
     })
   }
-
   return User;
 };

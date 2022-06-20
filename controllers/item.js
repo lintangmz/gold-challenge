@@ -25,6 +25,7 @@ module.exports = {
     add(req, res) {
         return Item.create({
             name: req.body.name,
+            description: req.body.description,
             price: req.body.price,
             qty: req.body.qty
         })
@@ -42,6 +43,7 @@ module.exports = {
                 }
                 return item.update({
                     name: req.body.name,
+                    description: req.body.description,
                     price: req.body.price,
                     qty: req.body.qty
                 })
